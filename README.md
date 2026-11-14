@@ -1,10 +1,11 @@
 # Lofted Aero flight controller firmware
 
-This branch holds no source code. It is the catalog Lofty GCS reads to set up and update
-Lofted Aero flight controllers (the "Lofted Aero Flight Controllers" card on its Firmware
-screen). Lofty GCS reads it from `raw.githubusercontent.com`, which serves files with CORS
-headers, so the browser version can read it too; GitHub release downloads cannot be fetched
-from a web page.
+Builds of [LoftedAero/ardupilot](https://github.com/LoftedAero/ardupilot) for Lofted Aero
+flight controllers. This repository holds no source code; each release's `version` names the
+commit it was built from. It is the catalog Lofty GCS reads to set up and update these boards
+(the "Lofted Aero Flight Controllers" card on its Firmware screen), from the `main` branch.
+Lofty GCS reads it from `raw.githubusercontent.com`, which serves files with CORS headers, so
+the browser version can read it too; GitHub release downloads cannot be fetched from a web page.
 
 ```
 index.json                      { "format": 1, "releases": ["2026-11-13", "2026-11-07"] }
