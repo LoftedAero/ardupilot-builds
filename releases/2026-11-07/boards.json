@@ -1,0 +1,35 @@
+{
+  "format": 1,
+  "version": "4.8.0-dev 55eeb385",
+  "date": "2026-11-07",
+  "boards": [
+    {
+      "id": "f405-srx",
+      "name": "F405-SRX",
+      "boardId": 5999,
+      "bootloader": {
+        "file": "F405-SRX_bl.bin",
+        "size": 14040,
+        "sha256": "33e61db3097923d09002208c0da86736c176a12ec82f1b4277b8cf7335afd266",
+        "address": "0x08000000"
+      },
+      "receiver": {
+        "target": "newbeedrone.rx_2400.c324d",
+        "serial": 2,
+        "bootPin": 71,
+        "enPin": 70,
+        "baud": 420000
+      },
+      "firmware": [
+        {
+          "id": "ardupilot",
+          "name": "ArduPilot",
+          "file": "F405-SRX-ArduPilot.apj",
+          "size": 818806,
+          "sha256": "476554e4e6a4ed1d2e325970cb84e7feebe4294ed34de1660645fc09f96bd471",
+          "passthroughProtocol": 28
+        }
+      ]
+    }
+  ]
+}
