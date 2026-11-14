@@ -17,8 +17,10 @@ releases/<release>/<files>      the images boards.json names
 
 1. Make a folder under `releases/`. Its name is one path segment (letters, digits, `.`, `_`,
    `-`); a date works.
-2. Put the images in it: each board's ArduPilot bootloader (`.bin`) and one `.apj` per firmware
-   option.
+2. Put the images in it, two per firmware option, both from the same build: the `.apj`, and the
+   `_with_bl.hex` (the ArduPilot bootloader with that firmware behind it). Lofty GCS writes the
+   `.hex` to a blank board over the STM32's ROM DFU, and the `.apj` to a board that has the
+   bootloader.
 3. Write its `boards.json` (below). Every file needs its exact size in bytes and its SHA-256
    (`sha256sum`); Lofty GCS refuses a file that does not match.
 4. Add the folder's name to `index.json`.
@@ -38,10 +40,17 @@ what prove a file is the one published. Publish a new release instead.
       "id": "f405-srx",
       "name": "F405-SRX",
       "boardId": 5999,
-      "bootloader": { "file": "F405-SRX_bl.bin", "address": "0x08000000", "size": 14040, "sha256": "…" },
       "receiver": { "target": "newbeedrone.rx_2400.c324d", "serial": 2, "bootPin": 71, "enPin": 70, "baud": 420000 },
       "firmware": [
-        { "id": "stabrx", "name": "StabRX", "file": "F405-SRX-StabRX.apj", "size": 563996, "sha256": "…", "passthroughProtocol": 28 }
+        {
+          "id": "stabrx",
+          "name": "StabRX",
+          "file": "F405-SRX-StabRX.apj",
+          "size": 563996,
+          "sha256": "…",
+          "withBootloader": { "file": "F405-SRX-StabRX_with_bl.hex", "size": 1854676, "sha256": "…" },
+          "passthroughProtocol": 28
+        }
       ]
     }
   ]
@@ -53,7 +62,8 @@ what prove a file is the one published. Publish a new release instead.
   the board is renamed. `name` is what users see, and the newest release that lists a board
   decides it.
 - `boardId` is the hwdef's `APJ_BOARD_ID`. Every `.apj` must carry it.
-- `bootloader.address` is where the ROM DFU write starts, as a hex string.
+- `firmware[].withBootloader` is the build's `_with_bl.hex`. It must start at `0x08000000` and
+  hold the same firmware as the `.apj`; Lofty GCS's live test checks both.
 - `receiver` is the onboard ExpressLRS receiver: its ExpressLRS target, the `SERIALn` it is on,
   the ArduPilot GPIO numbers of the ESP32's BOOT and EN lines, and the CRSF baud the build
   expects. Leave it out for a board without one.

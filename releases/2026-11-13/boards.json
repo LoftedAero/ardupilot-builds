@@ -7,12 +7,6 @@
       "id": "f405-srx",
       "name": "F405-SRX",
       "boardId": 5999,
-      "bootloader": {
-        "file": "F405-SRX_bl.bin",
-        "size": 14040,
-        "sha256": "33e61db3097923d09002208c0da86736c176a12ec82f1b4277b8cf7335afd266",
-        "address": "0x08000000"
-      },
       "receiver": {
         "target": "newbeedrone.rx_2400.c324d",
         "serial": 2,
@@ -27,6 +21,11 @@
           "file": "F405-SRX-StabRX.apj",
           "size": 563996,
           "sha256": "200d6ce988314b4b580036a4dde3ec62cb34c41fbdf90230bd002b452e888cca",
+          "withBootloader": {
+            "file": "F405-SRX-StabRX_with_bl.hex",
+            "size": 1854676,
+            "sha256": "92a547690f867dc61e1d6e6f7bc4df5e0f8fcc6f3f2ff1ebceae7c60ae87ba6c"
+          },
           "passthroughProtocol": 28
         }
       ]
