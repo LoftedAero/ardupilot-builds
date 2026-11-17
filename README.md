@@ -69,5 +69,9 @@ what prove a file is the one published. Publish a new release instead.
   expects. Leave it out for a board without one.
 - `firmware[].passthroughProtocol` is the `SERIALn_PROTOCOL` used while the receiver is written:
   a protocol that build does not compile in (28, Scripting, while `AP_SCRIPTING_ENABLED` is 0).
+- `firmware[].id` picks the tile Lofty GCS shows the option on: `ardupilot`, `stabrx`,
+  `f35b-70` or `f35b-90`. An id Lofty GCS does not know is not offered, so a new product needs
+  a Lofty GCS release too. Lofty GCS shows its own name for each id; `name` is for readers of
+  this file.
 - A release may list only some of a board's firmware options; each option's release list shows
   the releases that have it.
