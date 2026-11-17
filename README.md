@@ -2,14 +2,14 @@
 
 Builds of [LoftedAero/ardupilot](https://github.com/LoftedAero/ardupilot) for Lofted Aero
 flight controllers. This repository holds no source code; each release is built from a tagged
-commit of LoftedAero/ardupilot, and its `version` names that tag and commit (see Source). It is
-the catalog Lofty GCS reads to set up and update these boards (the "Lofted Aero Flight
-Controllers" card on its Firmware screen), from the `main` branch.
+commit of LoftedAero/ardupilot (see Source). It is the catalog Lofty GCS reads to set up and
+update these boards (the "Lofted Aero Flight Controllers" card on its Firmware screen), from the
+`main` branch.
 Lofty GCS reads it from `raw.githubusercontent.com`, which serves files with CORS headers, so
 the browser version can read it too; GitHub release downloads cannot be fetched from a web page.
 
 ```
-index.json                      { "format": 1, "releases": ["2026-11-13", "2026-11-07"] }
+index.json                      { "format": 1, "releases": ["2026-11-16"] }
 releases/<release>/boards.json  the boards in that release and their firmware options
 releases/<release>/<files>      the images boards.json names
 ```
@@ -28,7 +28,15 @@ releases/<release>/<files>      the images boards.json names
    bootloader.
 3. Write its `boards.json` (below). Every file needs its exact size in bytes and its SHA-256
    (`sha256sum`); Lofty GCS refuses a file that does not match.
-4. Add the folder's name to `index.json`.
+4. Add the folder's name to `index.json`, at its place in the order (below).
+
+## Release order
+
+Lofty GCS lists releases in `index.json` order, the first at the top, and treats the first
+release that has a firmware option as that option's newest release. Order them by the
+ArduPilot version they are built on, newest first, and by build date within the same version.
+A build on an older ArduPilot release (for example 4.7.x) goes below every build on a newer
+one (4.8.0-dev here), even when it was built later. `date` does not change the order.
 
 Never change a published release's files: users may install any release, and the hashes are
 what prove a file is the one published. Publish a new release instead.
@@ -38,7 +46,7 @@ what prove a file is the one published. Publish a new release instead.
 ```json
 {
   "format": 1,
-  "version": "StabRX-2026-11-16 (262cde4d)",
+  "version": "StabRX-4.8.0-dev (262cde4d)",
   "date": "2026-11-16",
   "boards": [
     {
@@ -51,9 +59,9 @@ what prove a file is the one published. Publish a new release instead.
           "id": "stabrx",
           "name": "StabRX",
           "file": "F405-SRX-StabRX.apj",
-          "size": 563996,
+          "size": 565320,
           "sha256": "…",
-          "withBootloader": { "file": "F405-SRX-StabRX_with_bl.hex", "size": 1854676, "sha256": "…" },
+          "withBootloader": { "file": "F405-SRX-StabRX_with_bl.hex", "size": 1858240, "sha256": "…" },
           "passthroughProtocol": 28
         }
       ]
@@ -62,10 +70,11 @@ what prove a file is the one published. Publish a new release instead.
 }
 ```
 
-- `version` and `date` are shown in the release list; releases are ordered by `date`.
-  `version` is the source tag and, in brackets, the short commit hash the firmware reports
-  (`ArduPlane V4.8.0-dev (262cde4d)`). If a release holds options built from different
-  commits, name each tag.
+- `version` and `date` are shown in the release list. `version` is
+  `<product>-<ArduPilot version> (<short commit hash>)`: the product, the ArduPilot version
+  the build is based on (`THISFIRMWARE` in the vehicle's `version.h`), and the hash the
+  firmware reports. `StabRX-4.8.0-dev (262cde4d)` reports `ArduPlane V4.8.0-dev (262cde4d)`.
+  If a release holds options built from different commits, name each one.
 - `id` is the board's permanent key: Lofty GCS keys its setup pictures on it, so keep it when
   the board is renamed. `name` is what users see, and the newest release that lists a board
   decides it.
@@ -86,13 +95,9 @@ what prove a file is the one published. Publish a new release instead.
 
 ## Source
 
-Each release's source is the tag its `version` names, on
-[LoftedAero/ardupilot](https://github.com/LoftedAero/ardupilot). Releases before 2026-11-16
-used the older `version` form (ArduPilot version and commit hash); their tags are below.
+Each release is built from a tag on [LoftedAero/ardupilot](https://github.com/LoftedAero/ardupilot),
+named `<product>-<release>`. The hash in `version` is the tagged commit.
 
-| Release | Source tag | Note |
-|---|---|---|
-| 2026-11-16 | `StabRX-2026-11-16` | |
-| 2026-11-14b | `StabRX-2026-11-14b` | Same source as 2026-11-16, built before the commit: the firmware reports `78b82326` |
-| 2026-11-14, 2026-11-13 | none | Built from uncommitted changes (`-dirty`); no exact source |
-| 2026-11-07 | `F405-SRX-ArduPilot-2026-11-07` | |
+| Release | Source tag |
+|---|---|
+| 2026-11-16 | `StabRX-2026-11-16` |
