@@ -100,6 +100,7 @@ named `<product>-<release>`. The hash in `version` is the tagged commit.
 
 | Release | Source tag |
 |---|---|
+| 2026-11-19 | `StabRX-2026-11-19` |
 | 2026-11-16b | `StabRX-2026-11-16b` |
 | 2026-11-16-ardupilot | `F405-SRX-ArduPilot-2026-11-16` |
 | 2026-11-16 | `StabRX-2026-11-16` |
